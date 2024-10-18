@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       ];
 
 
-     function addQuotes(){
+     function showRandomQuote(){
       const randomposition =Math.floor(Math.random() * quotes.length);
       const randomquote =quotes[randomposition];
       DisplayQuotes.innerHTML = `
@@ -26,5 +26,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
    }
 
 
-    NewQuote.addEventListener('click', addQuotes);
+    NewQuote.addEventListener('click', showRandomQuote);
 });
