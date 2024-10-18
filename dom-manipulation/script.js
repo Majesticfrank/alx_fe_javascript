@@ -25,6 +25,73 @@ document.addEventListener('DOMContentLoaded', ()=>{
   `;
    }
 
+   function addQuote() {
+      const newQuoteText = document.getElementById("newQuoteText").value;
+      const newQuoteCategory = document.getElementById("newQuoteCategory").value;
+   
+   
+      if (newQuoteText.trim() === "" || newQuoteCategory.trim() === "") {
+          alert("Please enter both a quote and a category.");
+          return;
+      }
+   
+      const newQuote = {
+          text: newQuoteText,
+          category: newQuoteCategory
+      };
+      quotes.push(newQuote);
+   
+    
+      document.getElementById("newQuoteText").value = "";
+      document.getElementById("newQuoteCategory").value = "";
+   
+    addQuote();
+    }
+   
+
 
     NewQuote.addEventListener('click', showRandomQuote);
 });
+
+
+
+// let quotes = [
+//    { text: "The best way to predict the future is to invent it.", category: "Innovation" },
+//    { text: "Life is what happens when you're busy making other plans.", category: "Life" },
+//    { text: "The only limit to our realization of tomorrow is our doubts of today.", category: "Motivation" }
+// ];
+
+// function showRandomQuote() {
+//    const randomIndex = Math.floor(Math.random() * quotes.length);
+//    const quote = quotes[randomIndex];
+   
+//    const quoteDisplay = document.getElementById("quoteDisplay");
+//    quoteDisplay.innerHTML = `<p><strong>Quote:</strong> ${quote.text}</p><p><strong>Category:</strong> ${quote.category}</p>`;
+// }
+
+// function addQuote() {
+//    const newQuoteText = document.getElementById("newQuoteText").value;
+//    const newQuoteCategory = document.getElementById("newQuoteCategory").value;
+
+
+//    if (newQuoteText.trim() === "" || newQuoteCategory.trim() === "") {
+//        alert("Please enter both a quote and a category.");
+//        return;
+//    }
+
+//    const newQuote = {
+//        text: newQuoteText,
+//        category: newQuoteCategory
+//    };
+//    quotes.push(newQuote);
+
+ 
+//    document.getElementById("newQuoteText").value = "";
+//    document.getElementById("newQuoteCategory").value = "";
+
+  
+//    showRandomQuote();
+// }
+
+
+// document.addEventListener("DOMContentLoaded", showRandomQuote);
