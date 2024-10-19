@@ -93,5 +93,9 @@ function addQuote() {
    showRandomQuote();
 }
 
+function createAddQuoteForm(){
+    
+}
+
 
 document.addEventListener("DOMContentLoaded", showRandomQuote);
