@@ -87,10 +87,6 @@ function addQuote() {
        category: newQuoteCategory
    };
    quotes.push(newQuote);
-   const div = document.createElement('div');
-    div.textContent=`"${newQuote.text}" - (${newQuote.category})`;
-    document.getElementById('quoteList').appendChild(div);
-
  
    document.getElementById("newQuoteText").value = "";
    document.getElementById("newQuoteCategory").value = "";
@@ -99,6 +95,15 @@ function addQuote() {
    showRandomQuote();
 }
 
+function CreateAddQuoteForm(){
+    const div = document.createElement('div');
+    div.textContent=`"${newQuote.text}" - (${newQuote.category})`;
+    document.getElementById('quoteList').appendChild(div);
+
+ 
+}
+
+ CreateAddQuoteForm()
 
 
 
