@@ -90,7 +90,7 @@ function addQuote() {
 
    const div = document.createElement('div');
     div.textContent=`"${newQuote.text}" - (${newQuote.category})`;
-    document.getElementById('reateAddQuoteForm').appendChild(div);
+    document.getElementById('createAddQuoteForm"').appendChild(div);
 
  
    document.getElementById("newQuoteText").value = "";
