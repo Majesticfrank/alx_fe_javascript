@@ -56,9 +56,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 
 let quotes = [
-   { text: "The best way to predict the future is to invent it.", category: "Innovation" },
-   { text: "Life is what happens when you're busy making other plans.", category: "Life" },
-   { text: "The only limit to our realization of tomorrow is our doubts of today.", category: "Motivation" }
+   { text: "The best way to predict the future is to invent it.",
+     category: "Innovation" },
+   { text: "Life is what happens when you're busy making other plans.",
+     category: "Life" },
+   { text: "The only limit to our realization of tomorrow is our doubts of today.", 
+    category: "Motivation" }
 ];
 
 function showRandomQuote() {
@@ -84,6 +87,9 @@ function addQuote() {
        category: newQuoteCategory
    };
    quotes.push(newQuote);
+   const div = document.createElement('div');
+    div.textContent=`"${newQuote.text}" - (${newQuote.category})`;
+    document.getElementById('quoteList').appendChild(div);
 
  
    document.getElementById("newQuoteText").value = "";
@@ -93,9 +99,8 @@ function addQuote() {
    showRandomQuote();
 }
 
-function createAddQuoteForm(){
-    
-}
+
+
 
 
 document.addEventListener("DOMContentLoaded", showRandomQuote);

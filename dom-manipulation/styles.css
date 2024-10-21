@@ -103,6 +103,14 @@ input {
   width: 80%;
   max-width: 300px;
 }
+#div{
+  background-color: burlywood;
+  height: 400px;
+  position: absolute;
+  left: 100px;
+  top: 600px;
+  width: 50%;
+}
 
 /* Adjust layout for smaller screens */
 @media (max-width: 600px) {
