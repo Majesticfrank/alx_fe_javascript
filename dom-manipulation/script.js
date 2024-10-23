@@ -87,10 +87,11 @@ function addQuote() {
        category: newQuoteCategory
    };
    quotes.push(newQuote);
-
+   localStorage.setItem("quotes",JSON.stringify(newQuote));
+ 
    const div = document.createElement('div');
     div.textContent=`"${newQuote.text}" - (${newQuote.category})`;
-    document.getElementById('createAddQuoteForm"').appendChild(div);
+    document.getElementById('createAddQuoteForm').appendChild(div);
 
  
    document.getElementById("newQuoteText").value = "";
@@ -98,6 +99,17 @@ function addQuote() {
 
   
    showRandomQuote();
+}
+
+function importFromJsonFile(event) {
+  const fileReader = new FileReader();
+  fileReader.onload = function(event) {
+    const importedQuotes = JSON.parse(event.target.result);
+    quotes.push(...importedQuotes);
+    saveQuotes();
+    alert('Quotes imported successfully!');
+  };
+  fileReader.readAsText(event.target.files[0]);
 }
 
 
