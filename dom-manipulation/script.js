@@ -1,118 +1,50 @@
 document.addEventListener('DOMContentLoaded', ()=>{
-   
-     const NewQuote =document.getElementById('newQuote');
-     const DisplayQuotes =document.getElementById('quoteDisplay');
-      const quotes = [
-         {category:"love", text:"Love conquers all."},
-         {category:"love", text:"you know you're in love when you can't fall asleep because reality is finally better than your dreams-Dr Seuss"},
-         {category:"love", text:"Love is composed of a single soul inhabiting two bodies- Aristole"},
-         {category:"motivation", text:"just do it"},
-         {category:"motivation", text:"i'm not arguing i'm just explaining why i'm right"},
-         {category:"motivation", text:"Behind  every great man is a woman rolling her eyes-Jim carrey "},
-         {category:"humor",text:"i'm on a seafood diet,I see food and i eat it "},
-         {category:"motivation", text:"The best way to get started is to quit talking and begin doing- walt Disney"},
-         {category:"motivation", text:"success is not final,failure is not fata:it is the courage to continue that counts-Winston Churchill"},
-         {category:"motivation", text:"Dont't wartch the clock, do what it does keep going- sam levenson"}
-      ];
+  const AddQuotebutton= document.getElementById('addQuote');
+  const NewQuote = document.getElementById('newQuote');
+  const DisplayQuotes=document.getElementById('quoteDisplay');
+  quotes =[{Category:"love", text:"Love conquers all."},
+    { Category: "Motivation", text:"The only way to do great work is to love what you do. — Steve Jobs"},
+    {Category: "Motivation", text: "Don’t watch the clock; do what it does. Keep going. — Sam Levenson"},
+    {Category: "Motivation", text:"Success is not final, failure is not fatal: It is the courage to continue that counts. — Winston Churchill"},
+    {Category: "love", text: "Love is not about how much you say 'I love you,' but how much you prove that it’s true. — Anonymous"},
+    {Category:"love", text:"We are most alive when we're in love. — John Updike"},
+    {Category:"success",text: "Success usually comes to those who are too busy to be looking for it. — Henry David Thoreau"}
+  ];
+  
+  
+function showRandomQuote(){
+  const randomSelection =Math.floor(Math.random() * quotes.length);
+  const randomquote =quotes[randomSelection];
+  DisplayQuotes.innerHTML = `Category: ${randomquote.Category}<p>${randomquote.text}</p>`;
+}
+NewQuote.addEventListener('click',showRandomQuote);
 
 
-     function showRandomQuote(){
-      const randomposition =Math.floor(Math.random() * quotes.length);
-      const randomquote =quotes[randomposition];
-      DisplayQuotes.innerHTML = `
-      Category: ${randomquote.category}
-       <p>${randomquote.text}</p>
-  `;
-   }
+function addQuote(){
+  const NewQuoteText= document.getElementById('newQuoteText').value;
+  const NewQuoteCategory = document.getElementById('newQuoteCategory').value;
 
-   function addQuote() {
-      const newQuoteText = document.getElementById("newQuoteText").value;
-      const newQuoteCategory = document.getElementById("newQuoteCategory").value;
-   
-   
-      if (newQuoteText.trim() === "" || newQuoteCategory.trim() === "") {
-          alert("Please enter both a quote and a category.");
-          return;
-      }
-   
-      const newQuote = {
-          text: newQuoteText,
-          category: newQuoteCategory
-      };
-      quotes.push(newQuote);
-   
-    
-      document.getElementById("newQuoteText").value = "";
-      document.getElementById("newQuoteCategory").value = "";
-   
-    addQuote();
-    }
-   
+if(NewQuoteText.trim()===""|| NewQuoteCategory===""){
+  alert("please Enter a category and a text!");
+  return;
+}
+const newQuote = {
+  text: NewQuoteText,
+  Category: NewQuoteCategory
+};
+quotes.push(newQuote);
+
+document.getElementById("newQuoteText").value = "";
+document.getElementById("newQuoteCategory").value = "";
 
 
-    NewQuote.addEventListener('click', showRandomQuote);
+
+
+}
+
+AddQuotebutton.addEventListener('click', addQuote);
+
 });
 
 
 
-let quotes = [
-   { text: "The best way to predict the future is to invent it.",
-     category: "Innovation" },
-   { text: "Life is what happens when you're busy making other plans.",
-     category: "Life" },
-   { text: "The only limit to our realization of tomorrow is our doubts of today.", 
-    category: "Motivation" }
-];
-
-function showRandomQuote() {
-   const randomIndex = Math.floor(Math.random() * quotes.length);
-   const quote = quotes[randomIndex];
-   
-   const quoteDisplay = document.getElementById("quoteDisplay");
-   quoteDisplay.innerHTML = `<p><strong>Quote:</strong> ${quote.text}</p><p><strong>Category:</strong> ${quote.category}</p>`;
-}
-
-function addQuote() {
-   const newQuoteText = document.getElementById("newQuoteText").value;
-   const newQuoteCategory = document.getElementById("newQuoteCategory").value;
-
-
-   if (newQuoteText.trim() === "" || newQuoteCategory.trim() === "") {
-       alert("Please enter both a quote and a category.");
-       return;
-   }
-
-   const newQuote = {
-       text: newQuoteText,
-       category: newQuoteCategory
-   };
-   quotes.push(newQuote);
-   localStorage.setItem("quotes",JSON.stringify(newQuote));
- 
-   const div = document.createElement('div');
-    div.textContent=`"${newQuote.text}" - (${newQuote.category})`;
-    document.getElementById('createAddQuoteForm').appendChild(div);
-
- 
-   document.getElementById("newQuoteText").value = "";
-   document.getElementById("newQuoteCategory").value = "";
-
-  
-   showRandomQuote();
-}
-
-function importFromJsonFile(event) {
-  const fileReader = new FileReader();
-  fileReader.onload = function(event) {
-    const importedQuotes = JSON.parse(event.target.result);
-    quotes.push(...importedQuotes);
-    saveQuotes();
-    alert('Quotes imported successfully!');
-  };
-  fileReader.readAsText(event.target.files[0]);
-}
-
-
-
-
-document.addEventListener("DOMContentLoaded", showRandomQuote);
