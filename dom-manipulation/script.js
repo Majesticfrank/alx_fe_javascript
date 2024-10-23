@@ -20,7 +20,7 @@ function showRandomQuote(){
 NewQuote.addEventListener('click',showRandomQuote);
 
 
-function addQuote(){
+function createAddQuoteForm(){
   const NewQuoteText= document.getElementById('newQuoteText').value;
   const NewQuoteCategory = document.getElementById('newQuoteCategory').value;
 
@@ -42,7 +42,7 @@ document.getElementById("newQuoteCategory").value = "";
 
 }
 
-AddQuotebutton.addEventListener('click', addQuote);
+AddQuotebutton.addEventListener('click', createAddQuoteForm);
 
 });
 
