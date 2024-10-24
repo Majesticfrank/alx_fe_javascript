@@ -78,9 +78,13 @@ select {
 }
 
 /* Quote Form Container */
-#createAddQuoteForm {
-  margin-top: 20px;
+#createQuoteForm {
   text-align: center;
+  background-color: aqua;
+  width: 600px;
+  height: 200px;
+  position: absolute;
+  top: 500px;
 }
 
 /* Responsive Design */
