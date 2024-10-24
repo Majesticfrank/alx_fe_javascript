@@ -85,6 +85,7 @@ select {
   height: 200px;
   position: absolute;
   top: 500px;
+  z-index: -1;
 }
 
 /* Responsive Design */

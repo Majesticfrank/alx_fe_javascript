@@ -92,23 +92,20 @@ const newQuote={
   text:NewQuoteText,
   category:NewQuoteCategory
 };
-quotes.push(newQuote);
+ quotes.push(newQuote);
+const quoteList = document.getElementById('createQuoteForm');
+const listItem = document.createElement('li');
+listItem.textContent = `${newQuote.text} - ${newQuote.category}`;
+quoteList.appendChild(listItem);
 
-const div = document.createElement('div');
-div.textcontent=`"${newQuote.text}"  -(${newQuote.category})`;
-const form =document.getElementById('createQuoteForm');
 
 
-if(form){
-  form.appendChild(div);
-}else{
-  alert('container not found');
+
+
+document.getElementById('newQuoteText').value='';
+document.getElementById('newQuoteCategory').value='';
 }
 
-
-document.getElementById('newQuoteText').value="";
-document.getElementById('newQuoteCategory').value="";
-}
   
 
 AddQuoteButton.addEventListener('click', createAddQuoteForm);
