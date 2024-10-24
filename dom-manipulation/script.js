@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const DisplayQuotes = document.getElementById('quoteDisplay');
   
 
-  const quotes = [
+  const quotes =JSON.parse(localStorage.getItem('quotes'))|| [
     { category: "love", text: "Love conquers all." },
     { category: "Motivation", text: "The only way to do great work is to love what you do. — Steve Jobs" },
     { category: "Motivation", text: "Don’t watch the clock; do what it does. Keep going. — Sam Levenson" },
@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
     { category: "love", text: "We are most alive when we're in love. — John Updike" },
     { category: "success", text: "Success usually comes to those who are too busy to be looking for it. — Henry David Thoreau" }
   ];
+
+
+  
+  function saveQuotes(){
+    localStorage.setItem('quotes',JSON.stringify(quotes));
+  }
 
   function showRandomQuote() {
     const randomSelection = Math.floor(Math.random() * quotes.length);
@@ -39,6 +45,7 @@ const newQuote={
   category:NewQuoteCategory
 };
  quotes.push(newQuote);
+ saveQuotes();
 const quoteList = document.getElementById('createQuoteForm');
 const listItem = document.createElement('li');
 listItem.textContent = `${newQuote.text} - ${newQuote.category}`;
