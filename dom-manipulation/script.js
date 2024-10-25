@@ -2,9 +2,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const NewQuote = document.getElementById('newQuote');
   const DisplayQuotes = document.getElementById('quoteDisplay');
-  
-
-  const quotes =JSON.parse(localStorage.getItem('quotes'))|| [
+ 
+  const quotes = [
     { category: "love", text: "Love conquers all." },
     { category: "Motivation", text: "The only way to do great work is to love what you do. — Steve Jobs" },
     { category: "Motivation", text: "Don’t watch the clock; do what it does. Keep going. — Sam Levenson" },
@@ -51,15 +50,47 @@ const listItem = document.createElement('li');
 listItem.textContent = `${newQuote.text} - ${newQuote.category}`;
 quoteList.appendChild(listItem);
 
-
-
-
-
 document.getElementById('newQuoteText').value='';
 document.getElementById('newQuoteCategory').value='';
 }
 
-  
+
+
+function exportToJson() {
+  const json = JSON.stringify(quotes, null, 2);
+
+
+  const blob = new Blob([json], { type: "application/json" });
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+
+
+  a.href = url;
+  a.download = "/quotes/quotes.json";
+
+
+  a.click();
+
+
+  URL.revokeObjectURL(url);
+}
+
+
+
+function importFromJsonFile(event) {
+  const fileReader = new FileReader();
+  fileReader.onload = function(event) {
+    const importedQuotes = JSON.parse(event.target.result);
+    quotes.push(...importedQuotes);
+    saveQuotes();
+    alert('Quotes imported successfully!');
+  };
+  fileReader.readAsText(event.target.files[0]);
+}
+document.getElementById("exportBtn").addEventListener("click", exportToJson);
+document.getElementById('importFile').addEventListener('change', importFromJsonFile);
+
 
 AddQuoteButton.addEventListener('click', createAddQuoteForm);
 });
