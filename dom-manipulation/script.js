@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const NewQuote = document.getElementById('newQuote');
   const DisplayQuotes = document.getElementById('quoteDisplay');
  
-  const quotes = [
+  const quotes =JSON.parse(localStorage.getItem('quotes')) || [
     { category: "love", text: "Love conquers all." },
     { category: "Motivation", text: "The only way to do great work is to love what you do. — Steve Jobs" },
     { category: "Motivation", text: "Don’t watch the clock; do what it does. Keep going. — Sam Levenson" },
