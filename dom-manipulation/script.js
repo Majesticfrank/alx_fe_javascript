@@ -131,29 +131,30 @@ function filterQuotes() {
   showQuotes(filteredQuotes.map((quote) => ({ ...quote })));
 }
 
+async function fetchQuotesFromServer() {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
+    const data = await response.json();
+
+    const serverQuotes = data.map(quote => ({
+      category: "Motivation",
+      text: quote.title,
+    }));
+
+    quotes = mergeQuotes(quotes, serverQuotes);
+    saveQuotes();
+    showQuotes(quotes);
+  } catch (error) {
+    console.error('Error fetching quotes:', error);
+  }
+}
+
 function mergeQuotes(localQuotes, serverQuotes) {
-  const localMap = new Map(localQuotes.map(q => [q.text, q])); // Use text as the key
-  serverQuotes.forEach(quote => localMap.set(quote.text, quote)); // Server data overwrites local
-  return Array.from(localMap.values()); // Return merged quotes
+  const localMap = new Map(localQuotes.map(q => [q.text, q]));
+  serverQuotes.forEach(quote => localMap.set(quote.text, quote));
+  return Array.from(localMap.values());
 }
 
-
-function fetchQuotesFromServer() {
-  fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
-    .then(response => response.json())
-    .then(data => {
-      const serverQuotes = data.map((quote) => ({
-        category: "Motivation",
-        text: quote.title,
-      }));
-
-      // Merge server quotes with local quotes
-      quotes = mergeQuotes(quotes, serverQuotes);
-      saveQuotes(); // Update local storage
-      showQuotes(quotes); // Update UI
-    })
-    .catch(error => console.error('Error fetching quotes:', error));
-}
 
 
 populateCategories(categories);
