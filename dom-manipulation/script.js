@@ -21,12 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showRandomQuote() {
     const randomSelection = Math.floor(Math.random() * quotes.length);
-    const randomQuote = quotes[randomSelection];
-    DisplayQuotes.innerHTML = `<strong>category:</strong> ${randomQuote.category}<p>${randomQuote.text}</p>`;
+    return  quotes[randomSelection];
+  }
+
+  function showQuotes(quoteArray) {
+    DisplayQuotes.innerHTML = quoteArray
+      .map(
+        (quote) => `
+          <strong>Category:</strong> ${quote.category}
+          <p>${quote.text}</p>
+        `
+      )
+      .join('');
   }
 
 
-  NewQuote.addEventListener('click', showRandomQuote);
+  NewQuote.addEventListener('click', ()  => showQuotes([showRandomQuote()]));
 
   const AddQuoteButton = document.getElementById('addQuote');
 
@@ -113,16 +123,19 @@ function populateCategories(categories){
 
 function filterQuotes() {
   const selectedCategory = categoryFilter.value;
-  const filteredQuotes = selectedCategory === 'all'
-    ? quotes
-    : quotes.filter(quote => quote.category.toLowerCase() === selectedCategory);
-  showRandomQuote(filteredQuotes);
+  const filteredQuotes = quotes.filter(
+    (quote) =>
+      selectedCategory === 'all' || quote.category.toLowerCase() === selectedCategory
+  );
+
+  showQuotes(filteredQuotes.map((quote) => ({ ...quote })));
 }
+
 populateCategories(categories);
 document.getElementById("exportBtn").addEventListener("click", exportToJson);
 document.getElementById('importFile').addEventListener('change', importFromJsonFile);
 categoryFilter.addEventListener('change', filterQuotes);
-showRandomQuote();
+showQuotes([showRandomQuote()]);
 
 AddQuoteButton.addEventListener('click', createAddQuoteForm);
 });
