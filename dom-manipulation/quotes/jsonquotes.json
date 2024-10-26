@@ -1,52 +1,12 @@
 [
-  {
-    "category": "Inspiration",
-    "author": "Walt Disney",
-    "quote": "All our dreams can come true, if we have the courage to pursue them."
-  },
-  {
-    "category": "Motivation",
-    "author": "Vince Lombardi",
-    "quote": "The only place success comes before work is in the dictionary."
-  },
-  {
-    "category": "Wisdom",
-    "author": "Socrates",
-    "quote": "The only true wisdom is in knowing you know nothing."
-  },
-  {
-    "category": "Happiness",
-    "author": "Dalai Lama",
-    "quote": "Happiness is not something ready-made. It comes from your own actions."
-  },
-  {
-    "category": "Life",
-    "author": "John Lennon",
-    "quote": "Life is what happens when you’re busy making other plans."
-  },
-  {
-    "category": "Leadership",
-    "author": "John C. Maxwell",
-    "quote": "A leader is one who knows the way, goes the way, and shows the way."
-  },
-  {
-    "category": "Success",
-    "author": "Albert Schweitzer",
-    "quote": "Success is not the key to happiness. Happiness is the key to success."
-  },
-  {
-    "category": "Friendship",
-    "author": "Elbert Hubbard",
-    "quote": "A friend is someone who knows all about you and still loves you."
-  },
-  {
-    "category": "Courage",
-    "author": "Nelson Mandela",
-    "quote": "I learned that courage was not the absence of fear, but the triumph over it."
-  },
-  {
-    "category": "Humor",
-    "author": "Mark Twain",
-    "quote": "Get your facts first, then you can distort them as you please."
-  }
-]
+  {"category": "Inspiration","text": "All our dreams can come true, if we have the courage to pursue them." },
+  {"category": "Motivation","text": "The only place success comes before work is in the dictionary."},
+  {"category": "Wisdom", "text": "The only true wisdom is in knowing you know nothing."},
+  {"category":"Happiness", "text":"Happiness is not something ready-made. It comes from your own actions."},
+  {"category":"Life", "text": "Life is what happens when you’re busy making other plans."},
+  { "category": "Leadership", "text": "A leader is one who knows the way, goes the way, and shows the way."},
+  {"category": "Success", "text": "Success is not the key to happiness. Happiness is the key to success."},
+  {"category": "Friendship", "text": "A friend is someone who knows all about you and still loves you."},
+  {"category": "Courage","text": "I learned that courage was not the absence of fear, but the triumph over it."},
+  {"category": "Humor", "text": "Get your facts first, then you can distort them as you please."}
+ ]

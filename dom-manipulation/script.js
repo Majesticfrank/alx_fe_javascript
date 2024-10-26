@@ -29,6 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
   NewQuote.addEventListener('click', showRandomQuote);
 
   const AddQuoteButton = document.getElementById('addQuote');
+
+
+
+
   
 function  createAddQuoteForm(){
   const NewQuoteText= document.getElementById('newQuoteText').value;
@@ -39,14 +43,18 @@ if(NewQuoteText.trim()==="" || NewQuoteCategory.trim()===""){
   alert("please Enter both Text and category");
   return; 
 }
+
+
 const newQuote={
   text:NewQuoteText,
   category:NewQuoteCategory
 };
  quotes.push(newQuote);
  saveQuotes();
+
 const quoteList = document.getElementById('createQuoteForm');
 const listItem = document.createElement('li');
+
 listItem.textContent = `${newQuote.text} - ${newQuote.category}`;
 quoteList.appendChild(listItem);
 
@@ -67,7 +75,7 @@ function exportToJson() {
 
 
   a.href = url;
-  a.download = "/quotes/quotes.json";
+  a.download = "quotes.json";
 
 
   a.click();
@@ -88,9 +96,33 @@ function importFromJsonFile(event) {
   };
   fileReader.readAsText(event.target.files[0]);
 }
+const categories = ["love", "Motivation", "success","Happiness", "Life"];
+
+function populateCategories(categories){
+  const categoryFilter = document.getElementById('categoryFilter');
+  categories.forEach(category => {
+
+    const option = document.createElement('option');
+    option.value = category.toLowerCase();
+    option.textContent=category;
+    categoryFilter.appendChild(option);
+    
+  });
+
+}
+
+function filterQuotes() {
+  const selectedCategory = categoryFilter.value;
+  const filteredQuotes = selectedCategory === 'all'
+    ? quotes
+    : quotes.filter(quote => quote.category.toLowerCase() === selectedCategory);
+  showRandomQuote(filteredQuotes);
+}
+populateCategories(categories);
 document.getElementById("exportBtn").addEventListener("click", exportToJson);
 document.getElementById('importFile').addEventListener('change', importFromJsonFile);
-
+categoryFilter.addEventListener('change', filterQuotes);
+showRandomQuote();
 
 AddQuoteButton.addEventListener('click', createAddQuoteForm);
 });
