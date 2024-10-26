@@ -131,11 +131,39 @@ function filterQuotes() {
   showQuotes(filteredQuotes.map((quote) => ({ ...quote })));
 }
 
+function mergeQuotes(localQuotes, serverQuotes) {
+  const localMap = new Map(localQuotes.map(q => [q.text, q])); // Use text as the key
+  serverQuotes.forEach(quote => localMap.set(quote.text, quote)); // Server data overwrites local
+  return Array.from(localMap.values()); // Return merged quotes
+}
+
+
+function fetchQuotesFromServer() {
+  fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
+    .then(response => response.json())
+    .then(data => {
+      const serverQuotes = data.map((quote) => ({
+        category: "Motivation",
+        text: quote.title,
+      }));
+
+      // Merge server quotes with local quotes
+      quotes = mergeQuotes(quotes, serverQuotes);
+      saveQuotes(); // Update local storage
+      showQuotes(quotes); // Update UI
+    })
+    .catch(error => console.error('Error fetching quotes:', error));
+}
+
+
 populateCategories(categories);
 document.getElementById("exportBtn").addEventListener("click", exportToJson);
 document.getElementById('importFile').addEventListener('change', importFromJsonFile);
 categoryFilter.addEventListener('change', filterQuotes);
 showQuotes([showRandomQuote()]);
+
+fetchQuotesFromServer();
+setInterval(fetchQuotesFromServer, 15000);
 
 AddQuoteButton.addEventListener('click', createAddQuoteForm);
 });
