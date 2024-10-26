@@ -149,6 +149,34 @@ document.addEventListener('DOMContentLoaded', () => {
     showQuotes(filteredQuotes);
   }
 
+
+  const conflictModal = document.getElementById('conflictModal');
+  const conflictText = document.getElementById('conflictText');
+  const keepLocalButton = document.getElementById('keepLocal');
+  const keepServerButton = document.getElementById('keepServer');
+
+  // Show conflict modal when there is a conflict
+  function showConflictModal(conflictQuote, localQuote) {
+    conflictText.textContent = `Conflict detected for quote: "${conflictQuote.text}". 
+    Local Version: "${localQuote.text}". Choose which version to keep.`;
+    conflictModal.style.display = 'block';
+
+    keepLocalButton.onclick = () => {
+      conflictModal.style.display = 'none'; // Keep local quote
+    };
+
+    keepServerButton.onclick = () => {
+      const index = quotes.findIndex(q => q.text === localQuote.text);
+      if (index !== -1) {
+        quotes[index] = conflictQuote; // Overwrite local quote with server version
+        saveQuotes();
+        showQuotes(quotes);
+      }
+      conflictModal.style.display = 'none';
+    };
+  }
+
+
   populateCategories(categories);
   document.getElementById('exportBtn').addEventListener('click', exportToJson);
   document.getElementById('importFile').addEventListener('change', importFromJsonFile);
