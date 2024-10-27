@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const DisplayQuotes = document.getElementById('quoteDisplay');
   const AddQuoteButton = document.getElementById('addQuote');
   const categoryFilter = document.getElementById('categoryFilter');
-  const syncMessage = document.getElementById('syncMessage'); // New element for sync messages
   const categories = ["love", "Motivation", "success", "Happiness", "Life"];
 
   let quotes = JSON.parse(localStorage.getItem('quotes')) || [
@@ -60,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('newQuoteText').value = '';
     document.getElementById('newQuoteCategory').value = '';
 
-    // Optionally post the new quote to a mock server
     postNewQuote(newQuote);
   }
 
@@ -74,16 +72,28 @@ document.addEventListener('DOMContentLoaded', () => {
         text: post.title
       }));
 
-      quotes = mergeQuotes(quotes, newQuotes);
-      saveQuotes();
-      showQuotes(quotes);
-      
-      // Notify the user that quotes have been synced
-      syncMessage.textContent = "Quotes synced with server!";
-      setTimeout(() => { syncMessage.textContent = ''; }, 3000); // Clear message after 3 seconds
+      // Sync local quotes with server quotes
+      syncQuotes(newQuotes);
+
     } catch (error) {
       console.error('Error fetching quotes:', error);
     }
+  }
+
+  function syncQuotes(serverQuotes) {
+    const localMap = new Map(quotes.map(q => [q.text, q]));
+
+    serverQuotes.forEach(serverQuote => {
+      if (localMap.has(serverQuote.text)) {
+        showConflictModal(serverQuote, localMap.get(serverQuote.text));
+      } else {
+        localMap.set(serverQuote.text, serverQuote); // Add new quote from server
+      }
+    });
+
+    quotes = Array.from(localMap.values());
+    saveQuotes();
+    showQuotes(quotes);
   }
 
   async function postNewQuote(newQuote) {
@@ -101,12 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       console.error('Error adding new quote:', error);
     }
-  }
-
-  function mergeQuotes(localQuotes, serverQuotes) {
-    const localMap = new Map(localQuotes.map(q => [q.text, q]));
-    serverQuotes.forEach(quote => localMap.set(quote.text, quote));
-    return Array.from(localMap.values());
   }
 
   function exportToJson() {
@@ -159,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const keepLocalButton = document.getElementById('keepLocal');
   const keepServerButton = document.getElementById('keepServer');
 
-  // Show conflict modal when there is a conflict
   function showConflictModal(conflictQuote, localQuote) {
     conflictText.textContent = `Conflict detected for quote: "${conflictQuote.text}". 
     Local Version: "${localQuote.text}". Choose which version to keep.`;
@@ -191,3 +194,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   AddQuoteButton.addEventListener('click', createAddQuoteForm);
 });
+
