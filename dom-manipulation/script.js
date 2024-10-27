@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('newQuoteText').value = '';
     document.getElementById('newQuoteCategory').value = '';
 
-    // Optionally post the new quote to a mock server
     postNewQuote(newQuote);
   }
 
@@ -73,12 +72,28 @@ document.addEventListener('DOMContentLoaded', () => {
         text: post.title
       }));
 
-      quotes = mergeQuotes(quotes, newQuotes);
-      saveQuotes();
-      showQuotes(quotes);
+      // Sync local quotes with server quotes
+      syncQuotes(newQuotes);
+
     } catch (error) {
       console.error('Error fetching quotes:', error);
     }
+  }
+
+  function syncQuotes(serverQuotes) {
+    const localMap = new Map(quotes.map(q => [q.text, q]));
+
+    serverQuotes.forEach(serverQuote => {
+      if (localMap.has(serverQuote.text)) {
+        showConflictModal(serverQuote, localMap.get(serverQuote.text));
+      } else {
+        localMap.set(serverQuote.text, serverQuote); // Add new quote from server
+      }
+    });
+
+    quotes = Array.from(localMap.values());
+    saveQuotes();
+    showQuotes(quotes);
   }
 
   async function postNewQuote(newQuote) {
@@ -96,12 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       console.error('Error adding new quote:', error);
     }
-  }
-
-  function mergeQuotes(localQuotes, serverQuotes) {
-    const localMap = new Map(localQuotes.map(q => [q.text, q]));
-    serverQuotes.forEach(quote => localMap.set(quote.text, quote));
-    return Array.from(localMap.values());
   }
 
   function exportToJson() {
@@ -149,13 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
     showQuotes(filteredQuotes);
   }
 
-
   const conflictModal = document.getElementById('conflictModal');
   const conflictText = document.getElementById('conflictText');
   const keepLocalButton = document.getElementById('keepLocal');
   const keepServerButton = document.getElementById('keepServer');
 
-  // Show conflict modal when there is a conflict
   function showConflictModal(conflictQuote, localQuote) {
     conflictText.textContent = `Conflict detected for quote: "${conflictQuote.text}". 
     Local Version: "${localQuote.text}". Choose which version to keep.`;
@@ -176,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-
   populateCategories(categories);
   document.getElementById('exportBtn').addEventListener('click', exportToJson);
   document.getElementById('importFile').addEventListener('change', importFromJsonFile);
@@ -188,3 +194,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   AddQuoteButton.addEventListener('click', createAddQuoteForm);
 });
+
