@@ -178,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quotes[index] = conflictQuote; // Overwrite local quote with server version
         saveQuotes();
         showQuotes(quotes);
+        alert("Quotes synced with server!");
       }
       conflictModal.style.display = 'none';
     };
